@@ -21,6 +21,8 @@ const __useRouter = useRouter()
   gap: 20px;
   flex-direction: column;
   width: 400px;
+  height: 100%;
+  margin: auto;
 
   img {
     width: 100%;
