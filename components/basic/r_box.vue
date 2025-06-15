@@ -1,7 +1,6 @@
 <template>
   <div class="menu">
     <slot />
-    asd
   </div>
 </template>
 
@@ -17,7 +16,7 @@ const props = defineProps({
   },
   background: {
     type: String,
-    default: "#F1F3F5"
+    default: "#E5E5E5"
   },
   radius: {
     type: Number,
@@ -39,5 +38,6 @@ const {
   color: v-bind("p_color");
   background: v-bind("p_background");
   border-radius: v-bind("`${p_radius}px`");
+  font-weight: 500;
 }
 </style>

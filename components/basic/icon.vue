@@ -1,6 +1,6 @@
 <template>
   <div 
-    class="btn"
+    class="icon"
     :style="{
       width : p_width,
       height : p_height,
@@ -26,7 +26,7 @@ const props = defineProps({
   },
   color: {
     type: String,
-    default: "black",
+    default: "rgba(8, 14, 11, 0.8)",
   }
 })
 
@@ -39,8 +39,9 @@ const {
 </script>
 
 <style lang="scss" scoped>
-.btn {
+.icon {
   mask-repeat: no-repeat;
   mask-size: contain;
+  cursor: pointer;
 }
 </style>
