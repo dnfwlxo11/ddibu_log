@@ -91,6 +91,7 @@ const f_clickCard = (name) => {
     font-size: 18px;
     text-align: center;
     line-height: 24px;
+    padding: 20px;
     box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
 
     .logo {

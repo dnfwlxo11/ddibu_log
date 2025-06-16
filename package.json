@@ -3,6 +3,7 @@
   "private": true,
   "type": "module",
   "scripts": {
+    "start": "cross-env PORT=80 nuxt start",
     "build": "nuxt build",
     "dev": "nuxt dev",
     "generate": "nuxt generate",

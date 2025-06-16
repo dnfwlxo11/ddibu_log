@@ -5,15 +5,19 @@ export default defineNuxtConfig({
   $development: {
     imports: {
       dirs: [
-        "composables/**"
+        "composables/**",
+        "data/**",
+        "assets/**"
       ]
     }
   },
   $production: {
     imports: {
       dirs: [
-        "composables/**"
+        "composables/**",
+        "data/**",
+        "assets/**"
       ]
     }
-  }
+  },
 })

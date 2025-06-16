@@ -31,52 +31,57 @@
       class="seals"
       :style="{ 'grid-template-columns': c_showingStyle === 'minimum' ? 'repeat(auto-fill, minmax(80px, 1fr))' : 'repeat(auto-fill, minmax(138px, 1fr))' }"
     >
-      <template v-for="({ number, name, all, data }, idx) in _listData">
+      <template v-for="({ number, name, all, data }, key) in _listData">
         <div
-          v-if="c_listData.includes(idx) && !all"
+          v-if="c_listData.includes(`${c_path?.genre}_${key}`) && all"
           class="seal"
-          :class="{ clicked: _selectedSeal?.[`${c_path?.genre}_${c_serise}_${idx}`]  }"
-          @click="f_clickSeal(idx)"
+          :class="{ clicked: _selectedSeal?.[`${c_path?.genre}_${key}`]  }"
+          @click="f_clickSeal(key)"
         >
-          <BasicImage :src="`/seal/pokemon/${c_serise}/${c_serise}_${idx}.webp`" />
+          <BasicImage :src="`/seal/pokemon/${c_serise}/${key}.webp`" />
         </div>
         <template v-else>
-          <div
-            v-for="({ number: dataNumber, name: dataName }, dataIdx) in data"
-            class="seal"
-            :class="{ clicked: _selectedSeal?.[`${c_path?.genre}_${idx}_${dataIdx}`]  }"
-            @click="f_clickSeal(dataIdx, idx)"
-          >
-            <BasicImage :src="`/seal/pokemon/${idx}/${idx}_${dataIdx}.webp`" />
-          </div>
+          <template v-if="key !== 'all' && c_listData.includes(`${c_path?.genre}_${key}`)">
+            <div
+              class="seal"
+              :class="{ clicked: _selectedSeal?.[`${c_path?.genre}_${key}`]  }"
+              @click="f_clickSeal(key)"
+            >
+              <BasicImage :src="`/seal/pokemon/${key.split('_').slice(0,3).join('_')}/${key}.webp`" />
+            </div>
+          </template>
         </template>
       </template>
     </div>
     <div v-else class="seal-list">
-      <template v-for="({ number, name, all, data }, idx) in _listData">
+      <template v-for="({ number, name, all, data }, key, index) in _listData">
         <div
-          v-if="c_listData.includes(idx) && !all"
+          v-if="c_listData.includes(`${c_path?.genre}_${key}`) && !all"
           class="seal"
-          :class="{ clicked: _selectedSeal?.[`${c_path?.genre}_${c_serise}_${idx}`]  }"
-          @click="f_clickSeal(idx)"
+          :class="{ clicked: _selectedSeal?.[`${c_path?.genre}_${key}`]  }"
+          @click="f_clickSeal(key)"
         >
-          {{ idx }}.
+          {{ index }}.
           <div class="name">{{ name }}</div> &nbsp;
           <div class="number">({{ number }})</div>
-          <img :src="`/seal/pokemon/${c_serise}/${c_serise}_${idx}.webp`">
+          <img :src="`/seal/pokemon/${c_serise}/${key}.webp`">
         </div>
         <template v-else>
-          <div 
-            v-for="({ number: dataNumber, name: dataName }, dataIdx) in data"
-            class="seal"
-            :class="{ clicked: _selectedSeal?.[`${c_path?.genre}_${idx}_${dataIdx}`]  }"
-            @click="f_clickSeal(dataIdx, idx)"
-          >
-            {{ dataIdx }}.
-            <div class="name">{{ dataName }}</div> &nbsp;
-            <div class="number">({{ dataNumber }})</div>
-            <img :src="`/seal/pokemon/${idx}/${idx}_${dataIdx}.webp`">
-          </div>
+          <template v-if="key !== 'all' && c_listData.includes(`${c_path?.genre}_${key}`)">
+            <div 
+              v-for="({ number: dataNumber, name: dataName }, dataIdx) in data"
+              class="seal"
+              :class="{ clicked: _selectedSeal?.[`${c_path?.genre}_${dataIdx}`]  }"
+              @click="f_clickSeal(dataIdx, key)"
+            >
+              <template>
+                <div class="index">{{ dataIdx.split('_').pop() }}.</div>
+                <div class="name">{{ dataName }}</div> &nbsp;
+                <div class="number">({{ dataNumber }})</div>
+                <img :src="`/seal/pokemon/${key}/${dataIdx}.webp`">
+              </template>
+            </div>
+          </template>
         </template>
       </template>
     </div>
@@ -101,32 +106,24 @@ if (typeof window != 'undefined') {
   s_collected = useState('ddibu_log', () => ref(localStorage.getItem('ddibu_log') || {}))
 }
 
+const pokemonSealSerise = [ "serise_2022_1", "serise_2022_2", "serise_2022_3", "serise_2022_4", "serise_2023_1", "serise_2023_2", "serise_2023_3", "serise_2024_1", "serise_2024_2", "serise_2024_3", "serise_2024_4", "serise_2025_1" ]
 onMounted(() => {
+  console.log(getSeriseData(c_serise.value), 'tset')
   const collectedData = getLocalStorageItem('ddibu_log') || "{}"
   const data = collectedData || {}
   _selected.value = data?.filter || ['전체']
   _showingStyle.value = data?.show || 'minimum'
   if (c_serise.value === 'all') {
-    [
-      "serise_2022_1",
-      "serise_2022_2",
-      "serise_2022_3",
-      "serise_2022_4",
-      "serise_2023_1",
-      "serise_2023_2",
-      "serise_2023_3",
-      "serise_2024_1",
-      "serise_2024_2",
-      "serise_2024_3",
-      "serise_2024_4",
-      "serise_2025_1",
-    ].map((v) => _listData.value[v] = { all: true, data: getSeriseData(v) })
+    pokemonSealSerise.map((v) => _listData.value = { ..._listData.value, ...getSeriseData(v) })
+    _listData.value['all'] = true
+
+    console.log(_listData.value)
   } else _listData.value = getSeriseData(c_serise.value)
-  
 
   if (!data?.data) data['data'] = {}
   _selectedSeal.value = Object.keys(data?.data).reduce((acc, key) => {
     if (!data['data']?.[key]) return acc
+    if (!key.includes(c_serise.value) && c_serise.value !== 'all') return acc
     acc[key] = data['data'][key]
     return acc
   }, {})
@@ -136,6 +133,7 @@ watch(s_collected, (v) => {
   if (!v?.data) return
   _selectedSeal.value = Object.keys(v?.data).reduce((acc, key) => {
     if (!v['data']?.[key]) return acc
+    if (!key.includes(c_serise.value)) return acc
     acc[key] = v['data'][key]
     return acc
   }, {})
@@ -143,54 +141,38 @@ watch(s_collected, (v) => {
 
 const _listData = ref({})
 const c_listData = computed(() => {
-  const data = getSeriseData('serise_2022_1')
-  let tmpData = []
+  const data = c_serise.value === 'all' 
+    ? pokemonSealSerise.map(v => getSeriseData(v)).reduce((acc, v) => (acc = { ...acc, ...v }, acc), {}) 
+    : getSeriseData(c_serise.value)
 
-  if (_selected.value.includes('전체')) tmpData = Object.keys(data)
+  let tmpData = []
+  
+  if (_selected.value.includes('전체')) tmpData = Object.keys(data).map(v => `${c_path.value.genre}_${v}`)
   if (_selected.value.includes('수집완료')) {
-    tmpData = [ ...Object.keys(_selectedSeal.value).map(v => {
-      const selectedNumber = v?.split('_')?.pop() || ''
-      return selectedNumber
-    })]
+    tmpData = [ ...Object.keys(_selectedSeal.value)]
   }
   if (_selected.value.includes('수집필요')) {
-    const existsSeal = Object.keys(_selectedSeal.value).map(v => {
-      const selectedNumber = v?.split('_')?.pop() || ''
-      return selectedNumber
-    })
-
-    tmpData = [ ...tmpData, ...Object.keys(_listData.value).filter(v => !existsSeal.includes(v)) ]
+    
+    const existsSeal = Object.keys(_selectedSeal.value)
+    tmpData = [ ...tmpData, ...Object.keys(data).map(v => `${c_path.value?.genre}_${v}`).filter(v => !existsSeal.includes(v)) ]
   }
-
   return tmpData
 })
 
 const _selectedSeal = ref({})
 const _collected = ref({})
 
-const f_clickSeal = (key, serise = '') => {
-  if (c_path.value.serise === 'all') {
-    if (_selectedSeal.value?.[`${c_path.value.genre}_${serise}_${key}`]) {
-      delete _selectedSeal.value[`${c_path.value.genre}_${serise}_${key}`]
-      setLocalStorageItem(`${c_path.value.genre}_${serise}_${key}` , true)
-      return
-    }
-
-    if (!c_path.value?.genre || !serise) return
-    setLocalStorageItem(`${c_path.value.genre}_${serise}_${key}` , true)
-    _selectedSeal.value[`${c_path.value.genre}_${serise}_${key}`] = true
-    return
-  }
-
-  if (_selectedSeal.value?.[`${c_path.value.genre}_${c_path.value.serise}_${key}`]) {
-    delete _selectedSeal.value[`${c_path.value.genre}_${c_path.value.serise}_${key}`]
-    setLocalStorageItem(`${c_path.value.genre}_${c_path.value.serise}_${key}` , true)
+// 기본은 path param, 특정시리즈 지정 가능
+const f_clickSeal = (key) => {
+  if (_selectedSeal.value?.[`${c_path.value.genre}_${key}`]) {
+    delete _selectedSeal.value[`${c_path.value.genre}_${key}`]
+    setLocalStorageItem(`${c_path.value.genre}_${key}` , true)
     return
   }
 
   if (!c_path.value?.genre || !c_path.value?.serise) return
-  setLocalStorageItem(`${c_path.value.genre}_${c_path.value.serise}_${key}` , true)
-  _selectedSeal.value[`${c_path.value.genre}_${c_path.value.serise}_${key}`] = true
+  setLocalStorageItem(`${c_path.value.genre}_${key}` , true)
+  _selectedSeal.value[`${c_path.value.genre}_${key}`] = true
 }
 
 const _showingStyle = ref("list")
@@ -306,6 +288,10 @@ const f_clickFilter = (item) => {
     color: rgba(8, 14, 11, 0.8);
     border-bottom: 1px solid black;
     height: 70px;
+
+    .index {
+      width: 35px;
+    }
 
     .number {
       font-size: 16px;
