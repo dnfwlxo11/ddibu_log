@@ -6,7 +6,7 @@
       </div>
       <div class="search">
         <BasicIcon src="/icons/search.svg" width="24px" height="24px" />
-        <input type="text" placeholder="이름이나 번호를 검색하세요!" v-model="_keyword" @keypress.enter="__useRouter.push(`/${_keyword}`)">
+        <input type="text" placeholder="이름이나 번호를 검색하세요!" v-model="_keyword" @keypress.enter="!_keyword ? () => {} : __useRouter.push(`/pokemon/search/${_keyword}`)">
       </div>
     </div>
     <div class="all" @click="__useRouter.push('/pokemon/all')">
@@ -56,7 +56,7 @@ const serises = [
 ]
 
 const __useRouter = useRouter()
-const _keyword = ref()
+const _keyword = ref('')
 </script>
 
 <style lang="scss">

@@ -113,6 +113,10 @@ const f_clickCard = (name) => {
     grid-template-columns: repeat(2, minmax(138px, 1fr));
     gap: 20px;
 
+    @media screen and (max-width: 640px) {
+      grid-template-columns: repeat(1, minmax(138px, 1fr));
+    }
+
     .seal {
       display: flex;
       justify-content: center;

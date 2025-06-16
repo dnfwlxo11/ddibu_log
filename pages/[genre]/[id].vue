@@ -6,7 +6,7 @@
         width="40px" 
         height="40px" 
         style="margin-right: 10px;" 
-        @click="__useRouter.push('/pokemon')"
+        @click="__useRouter.go(-1)"
       />
       <CompoundFilter 
         class="filter" 
@@ -38,7 +38,7 @@
           :class="{ clicked: _selectedSeal?.[`${c_path?.genre}_${key}`]  }"
           @click="f_clickSeal(key)"
         >
-          <BasicImage :src="`/seal/pokemon/${c_serise}/${key}.webp`" />
+          <BasicImage :src="`/seal/${c_genre}/${c_serise}/${key}.webp`" />
         </div>
         <template v-else>
           <template v-if="key !== 'all' && c_listData.includes(`${c_path?.genre}_${key}`)">
@@ -47,7 +47,7 @@
               :class="{ clicked: _selectedSeal?.[`${c_path?.genre}_${key}`]  }"
               @click="f_clickSeal(key)"
             >
-              <BasicImage :src="`/seal/pokemon/${key.split('_').slice(0,3).join('_')}/${key}.webp`" />
+              <BasicImage :src="`/seal/${c_genre}/${key.split('_').slice(0,3).join('_')}/${key}.webp`" />
             </div>
           </template>
         </template>
@@ -64,7 +64,7 @@
           {{ index }}.
           <div class="name">{{ name }}</div> &nbsp;
           <div class="number">({{ number }})</div>
-          <img :src="`/seal/pokemon/${c_serise}/${key}.webp`">
+          <img :src="`/seal/${c_genre}/${c_serise}/${key}.webp`">
         </div>
         <template v-else>
           <template v-if="key !== 'all' && c_listData.includes(`${c_path?.genre}_${key}`)">
@@ -78,7 +78,7 @@
                 <div class="index">{{ dataIdx.split('_').pop() }}.</div>
                 <div class="name">{{ dataName }}</div> &nbsp;
                 <div class="number">({{ dataNumber }})</div>
-                <img :src="`/seal/pokemon/${key}/${dataIdx}.webp`">
+                <img :src="`/seal/${c_genre}/${key}/${dataIdx}.webp`">
               </template>
             </div>
           </template>
@@ -98,6 +98,7 @@ const c_path = computed((route) => {
     serise
   }
 })
+const c_genre = computed(() => __useRoute.params?.genre)
 
 const c_serise = computed((route) => __useRoute.params?.id)
 let s_collected
