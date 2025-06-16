@@ -16,7 +16,7 @@
       <div 
         class="serise" 
         v-for="({ name, period, id, src }, idx) of serises"
-        @click="__useRouter.push(`/pokemon/${id}`)"
+        @click="f_clickCard(name, id)"
         :style="{ 
           'background-image': `url(${src})`,
           'background-repeat': 'no-repeat',
@@ -57,6 +57,20 @@ const serises = [
 
 const __useRouter = useRouter()
 const _keyword = ref('')
+
+const f_clickCard = (name, id) => {
+  let recentMenu = JSON.parse(localStorage?.getItem('ddibu_recent_menu') || '[]')
+  if (Object.values(recentMenu).map(v => v?.serise).includes(id)) {
+    __useRouter.push(`/pokemon/${id}`)
+    return
+  }
+
+  recentMenu = [ { serise: id, name, genre: 'pokemon' }, ...recentMenu ].slice(0, 3)
+  console.log(recentMenu)
+  localStorage.setItem('ddibu_recent_menu', JSON.stringify(recentMenu))
+
+  return
+}
 </script>
 
 <style lang="scss">

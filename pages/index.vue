@@ -10,8 +10,11 @@
       <div class="recent-menu">
         <div class="title">최근 방문 메뉴</div>
         <div class="menus">
-          <BasicRBox>
-            포켓몬 띠부씰
+          <BasicRBox 
+            v-for="({ serise, name, genre }, idx) of _recentMenus"
+            @click="__useRouter.push(`/${genre}/${serise}`)"
+          >
+            {{ name }}
           </BasicRBox>
         </div>
       </div>
@@ -42,14 +45,19 @@ const __useRouter = useRouter()
 
 const _menus = [
   { title: "포켓몬 띠부씰", desc: "다양하고 귀여운 포켓몬스터 띠부씰", src: "/International_Pokemon_logo.svg", alt: "공식 포켓몬스터 로고", name: "pokemon", type: "img" },
-  { title: "소통하기", desc: "여러 유저들과 소통하며 수집을 더욱 즐겁게 해보세요!", src: "/icons/partner_exchange.svg", alt: "거래 아이콘", name: "trade", type: "icon" },
   { title: "야구 띠부씰", desc: "내가 좋아하는 선수들이 띠부씰로", src: "/kbo.png", alt: "공식 KBO 로고", name: "kbo", type: "img" },
+  { title: "소통하기", desc: "여러 유저들과 소통하며 수집을 더욱 즐겁게 해보세요!", src: "/icons/partner_exchange.svg", alt: "거래 아이콘", name: "trade", type: "icon" },
   { title: "그 밖의 띠부씰", desc: "남들모르게 나만 알고싶은 씰", src: "/icons/more_horiz.svg", alt: "더보기 아이콘", name: "other", type: "icon" },
 ]
 
 const f_clickCard = (name) => {
   __useRouter.push(`/${name}`)
 }
+
+const _recentMenus = ref([])
+onMounted(() => {
+  _recentMenus.value = JSON.parse(localStorage?.getItem('ddibu_recent_menu') || '[]')
+})
 </script>
 
 <style lang="scss">
@@ -68,10 +76,13 @@ const f_clickCard = (name) => {
     .menus {
       margin-top: 10px;
       display: flex;
+      flex-wrap: wrap;
       font-weight: 600;
+      gap: 10px;
 
       & .menu {
-        margin-right: 10px;
+        white-space: nowrap;
+        cursor: pointer;
 
         &:last-child {
           margin-right: 0;
