@@ -2,12 +2,15 @@
   <NuxtLayout>
     <template v-if="genreData?.[c_genre]">
       <div class="top-side">
-        <div class="title">
-          {{ genreData?.[c_genre]?.title }} <div class="title-desc">{{ genreData?.[c_genre]?.desc }}</div>
+        <div class="top-left-side">
+          <BasicIcon class="icon" src="/icons/chevron_left.svg" width="32px" height="32px" @click="__useRouter.go(-1)" />
+          <div class="title">
+            {{ genreData?.[c_genre]?.title }} <div class="title-desc">{{ genreData?.[c_genre]?.desc }}</div>
+          </div>
         </div>
         <div class="search">
           <BasicIcon src="/icons/search.svg" width="24px" height="24px" />
-          <input type="text" placeholder="이름이나 번호를 검색하세요!" v-model="_keyword" @keypress.enter="!_keyword ? () => {} : __useRouter.push(`/pokemon/search/${_keyword}`)">
+          <input type="text" placeholder="이름이나 번호를 검색하세요!" v-model="_keyword" @keypress.enter="!_keyword ? () => {} : __useRouter.push(`/${c_genre}/search/${_keyword}`)">
         </div>
       </div>
       <div class="all" @click="__useRouter.push(`/${c_genre}/all`)">
@@ -65,10 +68,12 @@ const genreData = {
       { name: "2025년 포켓피스 띠부씰 도감", period: "2025.02.21", id: "serise_2025_1", src: "/seal/pokemon/poster/2025_포켓몬_포켓피스_도감_114종.png" },
     ]
   },
-  "kbo": {
+  "sports": {
     title: "KBO 야구 띠부씰",
     desc: "인기선수들이 스티커로?",
-    serises: []
+    serises: [
+      { name: "2025년 KBO 콜라보 띠부씰 도감", period: "2025.03.20", id: "serise_2025_baseball_kbo", src: "/seal/sports/poster/2025_KBO_콜라보_띠부씰_도감_215종.png" }
+    ]
   }
 }
 
@@ -80,7 +85,7 @@ const c_genre = computed(() => __useRoute?.params?.genre)
 const f_clickCard = (name, id) => {
   let recentMenu = JSON.parse(localStorage?.getItem('ddibu_recent_menu') || '[]')
   if (Object.values(recentMenu).map(v => v?.serise).includes(id)) {
-    __useRouter.push(`/pokemon/${id}`)
+    __useRouter.push(`/${c_genre.value}/${id}`)
     return
   }
 
@@ -97,6 +102,27 @@ const f_clickCard = (name, id) => {
   display: flex;
   align-items: center;
 
+  .top-left-side {
+    display: flex;
+
+    .icon {
+      margin-right: 5px;
+    }
+
+    @media screen and (max-width: 640px) {
+      width: 100%;
+
+      .title {
+        flex-direction: column;
+      }
+
+      .icon {
+        margin: auto 0;
+        margin-right: 10px;
+      }
+    }
+  }
+
   @media screen and (max-width: 640px) {
     flex-direction: column;
   }
@@ -107,13 +133,18 @@ const f_clickCard = (name, id) => {
     font-size: 28px;
     font-weight: 600;
 
-    @media screen and (max-width: 640px) {
-      flex-direction: column;
-    }
-
     .title-desc {
       font-size: 16px;
       margin-left: 10px;
+    }
+
+    @media screen and (max-width: 640px) {
+      flex-direction: column;
+      align-items: start;
+
+      .title-desc {
+        margin-left: 0;
+      }
     }
   }
 

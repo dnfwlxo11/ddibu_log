@@ -47,7 +47,7 @@
               :class="{ clicked: _selectedSeal?.[`${c_path?.genre}_${key}`]  }"
               @click="f_clickSeal(key)"
             >
-              <BasicImage :src="`/seal/${c_genre}/${key.split('_').slice(0,3).join('_')}/${key}.webp`" />
+              <BasicImage :src="`/seal/${c_genre}/${c_serise}/${key}.webp`" />
             </div>
           </template>
         </template>
@@ -61,7 +61,7 @@
           :class="{ clicked: _selectedSeal?.[`${c_path?.genre}_${key}`]  }"
           @click="f_clickSeal(key)"
         >
-          {{ index }}.
+          {{ index + 1 }}.
           <div class="name">{{ name }}</div> &nbsp;
           <div class="number">({{ number }})</div>
           <img :src="`/seal/${c_genre}/${c_serise}/${key}.webp`">

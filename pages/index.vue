@@ -25,7 +25,7 @@
               <div>{{ title }}</div>
               <div class="desc">{{ desc }}</div>
             </div>
-            <img v-if="type === 'img'" :class="`${name} seal-icon`" :src="src" alt="공식 포켓몬스터 로고">
+            <img v-if="type === 'img'" :class="`${name} seal-icon`" :src="src" :alt="alt">
             <BasicIcon v-else :class="`${name} seal-icon`" :src="src" width="40px" height="40px" />
           </div>
         </template>
@@ -50,7 +50,7 @@ const __useRouter = useRouter()
 
 const _menus = [
   { title: "포켓몬 띠부씰", desc: "다양하고 귀여운 포켓몬스터 띠부씰", src: "/international_Pokemon_logo.svg", alt: "공식 포켓몬스터 로고", name: "pokemon", type: "img" },
-  { title: "야구 띠부씰", desc: "내가 좋아하는 선수들이 띠부씰로", src: "/kbo.png", alt: "공식 KBO 로고", name: "kbo", type: "img" },
+  { title: "야구 띠부씰", desc: "내가 좋아하는 선수들이 띠부씰로", src: "/kbo.png", alt: "공식 KBO 로고", name: "sports", type: "img" },
   { title: "소통하기", desc: "여러 유저들과 소통하며 수집을 더욱 즐겁게 해보세요!", src: "/icons/partner_exchange.svg", alt: "거래 아이콘", name: "trade", type: "icon" },
   { title: "그 밖의 띠부씰", desc: "남들모르게 나만 알고싶은 씰", src: "/icons/more_horiz.svg", alt: "더보기 아이콘", name: "other", type: "icon" },
 ]
@@ -181,7 +181,7 @@ onMounted(() => {
       background: rgba(243, 238, 219, 1);
     }
 
-    .kbo-seal {
+    .sports-seal {
       background: rgba(227, 238, 224, 1);
     }
 
@@ -193,7 +193,7 @@ onMounted(() => {
       background: rgba(223, 239, 238, 1);
     }
 
-    .kbo {
+    .sports {
       width: 100px;
       margin-top: auto;
       margin-left: auto;

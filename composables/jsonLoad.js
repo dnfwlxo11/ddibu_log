@@ -10,7 +10,8 @@ import {
   serise_2024_2,
   serise_2024_3,
   serise_2024_4,
-  serise_2025_1
+  serise_2025_1,
+  serise_2025_baseball_kbo,
 } from '~/data/data'
 
 export const getSeriseData = (serise = null) => {
@@ -26,6 +27,7 @@ export const getSeriseData = (serise = null) => {
   if (serise === 'serise_2024_3') return serise_2024_3 || {}
   if (serise === 'serise_2024_4') return serise_2024_4 || {}
   if (serise === 'serise_2025_1') return serise_2025_1 || {}
+  if (serise === 'serise_2025_baseball_kbo') return serise_2025_baseball_kbo || {}
 
   return {
     serise_2022_1,
@@ -39,6 +41,7 @@ export const getSeriseData = (serise = null) => {
     serise_2024_2,
     serise_2024_3,
     serise_2024_4,
-    serise_2025_1
+    serise_2025_1,
+    serise_2025_baseball_kbo
   }
 }
