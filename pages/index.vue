@@ -31,6 +31,11 @@
         </template>
       </div>
     </div>
+    <BasicModal v-if="_isModal" @close="_isModal=false">
+      <div class="modal">
+        추후 추가 예정입니다.
+      </div>
+    </BasicModal>
   </NuxtLayout>
 </template>
 
@@ -50,7 +55,13 @@ const _menus = [
   { title: "그 밖의 띠부씰", desc: "남들모르게 나만 알고싶은 씰", src: "/icons/more_horiz.svg", alt: "더보기 아이콘", name: "other", type: "icon" },
 ]
 
+const _isModal = ref(false)
 const f_clickCard = (name) => {
+  console.log(name, 'name')
+  if (name === "trade" || name === "other") {
+    _isModal.value = true
+    return
+  }
   __useRouter.push(`/${name}`)
 }
 
@@ -198,5 +209,14 @@ onMounted(() => {
       margin-top: auto;
     }
   }
+}
+
+.modal {
+  font-size: 24px;
+  font-weight: 500;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 200px;
 }
 </style>

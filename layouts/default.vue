@@ -51,7 +51,7 @@ const f_extractData = () => {
   const jsonString = JSON.stringify(data, null, 2)
   const extractData = jsonToBase64(jsonString)
 
-  const blob = new Blob([extractData], { type: "application/json" })
+  const blob = new Blob([extractData], { type: "text/plain" })
   const url = URL.createObjectURL(blob)
 
   const downloadTag = document.createElement('a')

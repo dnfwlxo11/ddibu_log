@@ -12,10 +12,10 @@ input[type="date"], textarea, button {
 }
 
 input[type="text"] {
-  transform: scale(0.75);
+  transform: scale(0.88);
   transform-origin: left top;
 
-  margin-bottom: -10px;
+  margin-bottom: -5px;
   margin-right: -33.33%;
 }
 
