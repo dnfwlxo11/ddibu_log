@@ -32,14 +32,12 @@ const {
 <style lang="scss" scoped>
 .modal-wrapper {
   display: flex;
-  position: absolute;
+  position: fixed;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  left: 0;
-  top: 0;
-  right: 0;
-  bottom: 0;
+  width: 100vw;
+  height: 100vh;
   background: rgba(0, 0, 0, 0.6);
   z-index: 2;
 
