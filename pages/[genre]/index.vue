@@ -91,8 +91,8 @@ const f_clickCard = (name, id) => {
   }
 
   recentMenu = [ { serise: id, name, genre: c_genre.value }, ...recentMenu ].slice(0, 3)
-  console.log(recentMenu)
   localStorage.setItem('ddibu_recent_menu', JSON.stringify(recentMenu))
+  __useRouter.push(`/${c_genre.value}/${id}`)
 
   return
 }

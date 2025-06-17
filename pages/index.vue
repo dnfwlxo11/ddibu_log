@@ -57,7 +57,6 @@ const _menus = [
 
 const _isModal = ref(false)
 const f_clickCard = (name) => {
-  console.log(name, 'name')
   if (name === "trade" || name === "other") {
     _isModal.value = true
     return

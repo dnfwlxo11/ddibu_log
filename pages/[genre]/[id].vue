@@ -113,17 +113,15 @@ const sealSeriseData = {
 }
 
 onMounted(() => {
-  console.log(getSeriseData(c_serise.value), 'tset')
   const collectedData = getLocalStorageItem('ddibu_log') || "{}"
   const data = collectedData || {}
   _selected.value = data?.filter || ['전체']
   _showingStyle.value = data?.show || 'minimum'
   if (c_serise.value === 'all') {
-    sealSeriseData?.[c_genre.value].map((v) => _listData.value = { ..._listData.value, ...getSeriseData(v) })
+    sealSeriseData?.[c_genre.value].map((v) => _listData.value = { ..._listData.value, ...getSeriseData(c_genre.value, v) })
     _listData.value['all'] = true
 
-    console.log(_listData.value)
-  } else _listData.value = getSeriseData(c_serise.value)
+  } else _listData.value = getSeriseData(c_genre.value, c_serise.value)
 
   if (!data?.data) data['data'] = {}
   _selectedSeal.value = Object.keys(data?.data).reduce((acc, key) => {
@@ -147,8 +145,8 @@ watch(s_collected, (v) => {
 const _listData = ref({})
 const c_listData = computed(() => {
   const data = c_serise.value === 'all' 
-    ? sealSeriseData?.[c_genre.value].map(v => getSeriseData(v)).reduce((acc, v) => (acc = { ...acc, ...v }, acc), {}) 
-    : getSeriseData(c_serise.value)
+    ? sealSeriseData?.[c_genre.value].map(v => getSeriseData(c_genre.value, v)).reduce((acc, v) => (acc = { ...acc, ...v }, acc), {}) 
+    : getSeriseData(c_genre.value, c_serise.value)
 
   let tmpData = []
   

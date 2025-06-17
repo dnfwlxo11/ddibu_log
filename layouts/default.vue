@@ -73,7 +73,6 @@ const h_handleFile = (evt) => {
   const file = evt.target.files[0]
   
   if (!file) return
-  console.log(file)
   if (file.type !== 'text/plain') return
 
   const reader = new FileReader()

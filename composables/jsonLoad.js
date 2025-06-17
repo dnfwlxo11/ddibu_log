@@ -16,20 +16,20 @@ import {
 } from '~/data/data'
 
 export const getSeriseData = (genre, serise = null) => {
-  if (genre === 'pokemon' && serise === 'serise_2022_1') return serise_2022_1 || {}
-  if (genre === 'pokemon' && serise === 'serise_2022_2') return serise_2022_2 || {}
-  if (genre === 'pokemon' && serise === 'serise_2022_3') return serise_2022_3 || {}
-  if (genre === 'pokemon' && serise === 'serise_2022_4') return serise_2022_4 || {}
-  if (genre === 'pokemon' && serise === 'serise_2023_1') return serise_2023_1 || {}
-  if (genre === 'pokemon' && serise === 'serise_2023_2') return serise_2023_2 || {}
-  if (genre === 'pokemon' && serise === 'serise_2023_3') return serise_2023_3 || {}
-  if (genre === 'pokemon' && serise === 'serise_2024_1') return serise_2024_1 || {}
-  if (genre === 'pokemon' && serise === 'serise_2024_2') return serise_2024_2 || {}
-  if (genre === 'pokemon' && serise === 'serise_2024_3') return serise_2024_3 || {}
-  if (genre === 'pokemon' && serise === 'serise_2024_4') return serise_2024_4 || {}
-  if (genre === 'pokemon' && serise === 'serise_2025_1') return serise_2025_1 || {}
-  if (genre === 'sports' && serise === 'serise_2025_baseball_kbo') return serise_2025_baseball_kbo || {}
-  if (genre === 'sports' && serise === 'serise_2025_baseball_manggom') return serise_2025_baseball_manggom || {}
+  if (serise === 'serise_2022_1') return serise_2022_1 || {}
+  if (serise === 'serise_2022_2') return serise_2022_2 || {}
+  if (serise === 'serise_2022_3') return serise_2022_3 || {}
+  if (serise === 'serise_2022_4') return serise_2022_4 || {}
+  if (serise === 'serise_2023_1') return serise_2023_1 || {}
+  if (serise === 'serise_2023_2') return serise_2023_2 || {}
+  if (serise === 'serise_2023_3') return serise_2023_3 || {}
+  if (serise === 'serise_2024_1') return serise_2024_1 || {}
+  if (serise === 'serise_2024_2') return serise_2024_2 || {}
+  if (serise === 'serise_2024_3') return serise_2024_3 || {}
+  if (serise === 'serise_2024_4') return serise_2024_4 || {}
+  if (serise === 'serise_2025_1') return serise_2025_1 || {}
+  if (serise === 'serise_2025_baseball_kbo') return serise_2025_baseball_kbo || {}
+  if (serise === 'serise_2025_baseball_manggom') return serise_2025_baseball_manggom || {}
 
   const data = {
     pokemon: {
