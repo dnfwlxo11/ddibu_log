@@ -61,7 +61,7 @@
           :class="{ clicked: _selectedSeal?.[`${c_path?.genre}_${key}`]  }"
           @click="f_clickSeal(key)"
         >
-          {{ index }}.
+          {{ index + 1 }}.
           <div class="name">{{ name }}</div> &nbsp;
           <div class="number">({{ number }})</div>
           <img :src="`/seal/${c_genre}/${serise}/${key}.webp`">
@@ -109,7 +109,7 @@ if (typeof window != 'undefined') {
 
 const sealSeriseData = {
   pokemon: [ "serise_2022_1", "serise_2022_2", "serise_2022_3", "serise_2022_4", "serise_2023_1", "serise_2023_2", "serise_2023_3", "serise_2024_1", "serise_2024_2", "serise_2024_3", "serise_2024_4", "serise_2025_1" ],
-  sports: [ "serise_2025_baseball_kbo" ]
+  sports: [ "serise_2025_baseball_kbo", "serise_2025_baseball_manggom" ]
 }
 
 onMounted(() => {

@@ -70,9 +70,10 @@ const genreData = {
   },
   "sports": {
     title: "KBO 야구 띠부씰",
-    desc: "인기선수들이 스티커로?",
+    desc: "인기선수&캐릭터들이 스티커로?",
     serises: [
-      { name: "2025년 KBO 콜라보 띠부씰 도감", period: "2025.03.20", id: "serise_2025_baseball_kbo", src: "/seal/sports/poster/2025_KBO_콜라보_띠부씰_도감_215종.png" }
+      { name: "2025년 KBO 콜라보 띠부씰 도감", period: "2025.03.20", id: "serise_2025_baseball_kbo", src: "/seal/sports/poster/2025_KBO_콜라보_띠부씰_도감_215종.png" },
+      { name: "2025년 두산베어스X망그러진 곰 콜라보 띠부씰 도감", period: "2025.05.28", id: "serise_2025_baseball_manggom", src: "/seal/sports/poster/2025_CU_망곰_콜라보_띠부씰_도감_32종.png" }
     ]
   }
 }
@@ -213,7 +214,7 @@ const f_clickCard = (name, id) => {
 
     .serise-title {
       width: 100%;
-      height: 70px;
+      height: 90px;
       background: rgba(255, 255, 255, 0.8);
       display: flex;
       flex-direction: column;
@@ -222,11 +223,12 @@ const f_clickCard = (name, id) => {
       margin-top: auto;
       margin-left: auto;
       box-sizing: border-box;
-      padding: 5px 15px;
+      padding: 10px 15px;
 
       .name {
-        font-size: 18px;
+        font-size: 16px;
         font-weight: 700;
+        margin-bottom: auto;
       }
 
       .period {
