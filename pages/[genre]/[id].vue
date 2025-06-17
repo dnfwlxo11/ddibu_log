@@ -31,14 +31,14 @@
       class="seals"
       :style="{ 'grid-template-columns': c_showingStyle === 'minimum' ? 'repeat(auto-fill, minmax(80px, 1fr))' : 'repeat(auto-fill, minmax(138px, 1fr))' }"
     >
-      <template v-for="({ number, name, all, data }, key) in _listData">
+      <template v-for="({ number, name, all, data, serise }, key) in _listData">
         <div
           v-if="c_listData.includes(`${c_path?.genre}_${key}`) && all"
           class="seal"
           :class="{ clicked: _selectedSeal?.[`${c_path?.genre}_${key}`]  }"
           @click="f_clickSeal(key)"
         >
-          <BasicImage :src="`/seal/${c_genre}/${c_serise}/${key}.webp`" />
+          <BasicImage :src="`/seal/${c_genre}/${serise}/${key}.webp`" />
         </div>
         <template v-else>
           <template v-if="key !== 'all' && c_listData.includes(`${c_path?.genre}_${key}`)">
@@ -47,24 +47,24 @@
               :class="{ clicked: _selectedSeal?.[`${c_path?.genre}_${key}`]  }"
               @click="f_clickSeal(key)"
             >
-              <BasicImage :src="`/seal/${c_genre}/${c_serise}/${key}.webp`" />
+              <BasicImage :src="`/seal/${c_genre}/${serise}/${key}.webp`" />
             </div>
           </template>
         </template>
       </template>
     </div>
     <div v-else class="seal-list">
-      <template v-for="({ number, name, all, data }, key, index) in _listData">
+      <template v-for="({ number, name, all, data, serise }, key, index) in _listData">
         <div
           v-if="c_listData.includes(`${c_path?.genre}_${key}`) && !all"
           class="seal"
           :class="{ clicked: _selectedSeal?.[`${c_path?.genre}_${key}`]  }"
           @click="f_clickSeal(key)"
         >
-          {{ index + 1 }}.
+          {{ index }}.
           <div class="name">{{ name }}</div> &nbsp;
           <div class="number">({{ number }})</div>
-          <img :src="`/seal/${c_genre}/${c_serise}/${key}.webp`">
+          <img :src="`/seal/${c_genre}/${serise}/${key}.webp`">
         </div>
         <template v-else>
           <template v-if="key !== 'all' && c_listData.includes(`${c_path?.genre}_${key}`)">
@@ -107,7 +107,11 @@ if (typeof window != 'undefined') {
   s_collected = useState('ddibu_log', () => ref(localStorage.getItem('ddibu_log') || {}))
 }
 
-const pokemonSealSerise = [ "serise_2022_1", "serise_2022_2", "serise_2022_3", "serise_2022_4", "serise_2023_1", "serise_2023_2", "serise_2023_3", "serise_2024_1", "serise_2024_2", "serise_2024_3", "serise_2024_4", "serise_2025_1" ]
+const sealSeriseData = {
+  pokemon: [ "serise_2022_1", "serise_2022_2", "serise_2022_3", "serise_2022_4", "serise_2023_1", "serise_2023_2", "serise_2023_3", "serise_2024_1", "serise_2024_2", "serise_2024_3", "serise_2024_4", "serise_2025_1" ],
+  sports: [ "serise_2025_baseball_kbo" ]
+}
+
 onMounted(() => {
   console.log(getSeriseData(c_serise.value), 'tset')
   const collectedData = getLocalStorageItem('ddibu_log') || "{}"
@@ -115,7 +119,7 @@ onMounted(() => {
   _selected.value = data?.filter || ['전체']
   _showingStyle.value = data?.show || 'minimum'
   if (c_serise.value === 'all') {
-    pokemonSealSerise.map((v) => _listData.value = { ..._listData.value, ...getSeriseData(v) })
+    sealSeriseData?.[c_genre.value].map((v) => _listData.value = { ..._listData.value, ...getSeriseData(v) })
     _listData.value['all'] = true
 
     console.log(_listData.value)
@@ -143,7 +147,7 @@ watch(s_collected, (v) => {
 const _listData = ref({})
 const c_listData = computed(() => {
   const data = c_serise.value === 'all' 
-    ? pokemonSealSerise.map(v => getSeriseData(v)).reduce((acc, v) => (acc = { ...acc, ...v }, acc), {}) 
+    ? sealSeriseData?.[c_genre.value].map(v => getSeriseData(v)).reduce((acc, v) => (acc = { ...acc, ...v }, acc), {}) 
     : getSeriseData(c_serise.value)
 
   let tmpData = []
