@@ -109,6 +109,7 @@ const f_clickCard = (name, id) => {
     border-radius: 12px;
 
     input {
+      width: 100%;
       height: 100%;
       margin-left: 5px;
       outline: none;

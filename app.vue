@@ -11,6 +11,14 @@ input[type="date"], textarea, button {
   font-family: "Pretendard";
 }
 
+input[type="text"] {
+  transform: scale(0.75);
+  transform-origin: left top;
+
+  margin-bottom: -10px;
+  margin-right: -33.33%;
+}
+
 #__nuxt {
   display: contents;
 }
