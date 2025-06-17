@@ -39,7 +39,7 @@ const c_keyword = computed(() => __useRoute?.params?.search)
 const _result = ref()
 const _allSeriseData = ref()
 onMounted(() => {
-  _allSeriseData.value = getSeriseData()
+  _allSeriseData.value = getSeriseData(c_genre.value)
   f_searchKeyword(_allSeriseData.value)
 })
 
@@ -47,7 +47,7 @@ const f_searchKeyword = (data) => {
   const seriseNames = Object.keys(data)
   
   _result.value = seriseNames.reduce((acc, seriseName) => {
-    acc = [ ...acc, ...Object.entries(data[seriseName]).filter(([ key, {number, name} ]) => ((String(number) === c_keyword.value) || (String(name) === c_keyword.value))).map(([serise, data]) => ({ [serise]: data })) ]
+    acc = [ ...acc, ...Object.entries(data[seriseName]).filter(([ key, {number, name} ]) => ((String(number) === c_keyword.value) || (String(name).includes(c_keyword.value)))).map(([serise, data]) => ({ [serise]: data })) ]
     return acc
   }, [])
 }

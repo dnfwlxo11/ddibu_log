@@ -3,7 +3,7 @@
     <template v-if="genreData?.[c_genre]">
       <div class="top-side">
         <div class="top-left-side">
-          <BasicIcon class="icon" src="/icons/chevron_left.svg" width="32px" height="32px" @click="__useRouter.go(-1)" />
+          <BasicIcon class="icon" src="/icons/chevron_left.svg" width="32px" height="32px" @click="__useRouter.push('/')" />
           <div class="title">
             {{ genreData?.[c_genre]?.title }} <div class="title-desc">{{ genreData?.[c_genre]?.desc }}</div>
           </div>
@@ -69,7 +69,7 @@ const genreData = {
     ]
   },
   "sports": {
-    title: "KBO 야구 띠부씰",
+    title: "스포츠 띠부씰",
     desc: "인기선수&캐릭터들이 스티커로?",
     serises: [
       { name: "2025년 KBO 콜라보 띠부씰 도감", period: "2025.03.20", id: "serise_2025_baseball_kbo", src: "/seal/sports/poster/2025_KBO_콜라보_띠부씰_도감_215종.png" },
